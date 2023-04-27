@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_nav"
+    app:startDestination="@id/newsPaperFragment">
+
+    <fragment
+        android:id="@+id/newsPaperFragment"
+        android:name="com.prof.reda.android.project.googlenews.ui.fragments.NewsPaperFragment"
+        android:label="fragment_news_paper"
+        tools:layout="@layout/fragment_news_paper" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.prof.reda.android.project.googlenews.ui.fragments.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.prof.reda.android.project.googlenews.ui.fragments.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.prof.reda.android.project.googlenews.ui.fragments.FavoriteFragment"
+        android:label="fragment_favorite"
+        tools:layout="@layout/fragment_favorite" />
+</navigation>
