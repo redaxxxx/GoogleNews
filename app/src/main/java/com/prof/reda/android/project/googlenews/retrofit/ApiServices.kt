@@ -6,10 +6,9 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiServices {
-    @GET("v2/everything?q=bitcoin&from=2023-03-24&sortBy=publishedAt")
+    @GET("v2/everything?domains=wsj.com")
     fun getRecentArticles(@Query("apiKey")  apiKey: String): Call<Articles>
 
-    @GET("v2/everything?q=apple&from=2023-04-18&to=2023-04-18&sortBy=popularity")
+    @GET("v2/everything?q=apple&from=2023-04-28&to=2023-04-28&sortBy=popularity")
     fun getTechnologyArticles(@Query("apiKey") apiKey: String): Call<Articles>
-
 }

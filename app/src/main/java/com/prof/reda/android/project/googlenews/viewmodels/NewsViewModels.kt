@@ -5,40 +5,31 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.prof.reda.android.project.googlenews.Repository
 import com.prof.reda.android.project.googlenews.models.Article
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
-class NewsViewModels(application: Application): AndroidViewModel(application) {
+class NewsViewModels(application: Application) : ViewModel() {
 
-    private var repository= Repository(application)
-    private var viewModelJob = Job()
-    private val coroutineScop = CoroutineScope(viewModelJob + Dispatchers.Main)
-
+    private val repository:Repository
     private var recentArticles= MutableLiveData<List<Article>>()
     private var technologyArticles= MutableLiveData<List<Article>>()
 
+    init {
+        repository = Repository(application)
+    }
     fun getRecentArticles(apiKey: String): MutableLiveData<List<Article>>{
 
-        viewModelScope.launch {
-             recentArticles = repository.getRecentArticles(apiKey)
-        }
+//        viewModelScope.launch {
+//             recentArticles = repository.getRecentArticles(apiKey)
+//        }
 
         Log.d("Google News", "get recent articles")
-        return recentArticles
+        return repository.getRecentArticles(apiKey)
     }
 
     fun getTechnologyArticles(apiKey: String): MutableLiveData<List<Article>>{
-        viewModelScope.launch {
-            technologyArticles = repository.getTechnologyArticles(apiKey)
-        }
-        return technologyArticles
+//        viewModelScope.launch {
+//            technologyArticles = repository.getTechnologyArticles(apiKey)
+//        }
+        return repository.getTechnologyArticles(apiKey)
     }
-
-//    override fun onCleared() {
-//        super.onCleared()
-//        viewModelJob.cancel()
-//    }
-
 }

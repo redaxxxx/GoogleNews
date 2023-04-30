@@ -11,29 +11,29 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
- class Repository(application: Application) {
+ class Repository(application: Application){
 
-     private var _recentArticles = MutableLiveData<List<Article>>()
-     private var _technologyArticles = MutableLiveData<List<Article>>()
+     private var _recentArticles:MutableLiveData<List<Article>>
+     private var _technologyArticles:MutableLiveData<List<Article>>
 
+     init {
+         _recentArticles = MutableLiveData<List<Article>>()
+         _technologyArticles = MutableLiveData<List<Article>>()
+     }
      fun getRecentArticles(apiKey:String): MutableLiveData<List<Article>>{
 
-        val call = Http.create(ApiServices::class.java).getRecentArticles(apiKey)
+        val call = Http.getRetrofit().create(ApiServices::class.java).getRecentArticles(apiKey)
         call.enqueue(object : Callback<Articles>{
             override fun onResponse(call: Call<Articles>, response: Response<Articles>) {
-                if (response.isSuccessful){
-                    Log.d("Google News", "response successful")
                     if(response.body() != null){
 //                    val articles: List<Article> = response.body()!!.articles
 //                    _recentArticles.value = articles
                         _recentArticles.value = response.body()!!.articles
 
-                        Log.d("Google News", response.body().toString())
+                        Log.d("Google News", "response body "+response.body().toString())
                     }
 
                     else Log.d("Google News", "can't fetch any data")
-                } else Log.d("Google News", "response don't success")
-
             }
 
             override fun onFailure(call: Call<Articles>, t: Throwable) {
@@ -45,7 +45,7 @@ import retrofit2.Response
     }
 
      fun getTechnologyArticles(apiKey: String): MutableLiveData<List<Article>>{
-        val call = Http.create(ApiServices::class.java).getTechnologyArticles(apiKey)
+        val call = Http.getRetrofit().create(ApiServices::class.java).getTechnologyArticles(apiKey)
 //         val call = Http.retrofit.create(ApiServices::class.java).getTechnologyArticles(apiKey)
         call.enqueue(object : Callback<Articles>{
             override fun onResponse(call: Call<Articles>, response: Response<Articles>) {

@@ -2,58 +2,58 @@ package com.prof.reda.android.project.googlenews.adapters
 
 import android.content.Context
 import android.text.format.DateUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.prof.reda.android.project.googlenews.R
+import com.prof.reda.android.project.googlenews.TAG
 import com.prof.reda.android.project.googlenews.adapters.RecentNewsAdapter.NewsViewHolder
 import com.prof.reda.android.project.googlenews.databinding.NewsItemsBinding
 import com.prof.reda.android.project.googlenews.models.Article
 import com.squareup.picasso.Picasso
 import java.sql.Time
-
-class RecentNewsAdapter(private val mContext: Context, private var data: List<Article>) : RecyclerView.Adapter<NewsViewHolder>() {
-
-    fun setArticlesList(articles: List<Article>) {
-        this.data = articles
-        notifyDataSetChanged()
-    }
-
+class RecentNewsAdapter(private val mContext: Context, private val articleList: List<Article> = arrayListOf()) :
+    RecyclerView.Adapter<NewsViewHolder>() {
     class NewsViewHolder(val binding: NewsItemsBinding) : ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
-        return NewsViewHolder(
-            NewsItemsBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
+        Log.d(TAG, "work on adapter")
+        return NewsViewHolder(NewsItemsBinding.inflate(LayoutInflater.from(parent.context), parent,
+            false))
     }
-
     override fun getItemCount(): Int {
-        return data.size
+        return articleList.size
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
 
-        if (data.isNotEmpty()) {
-            val item = data[position]
+        Log.d(TAG, "onBindViewHolder")
+        val item = articleList[position]
 
-            val firstPart = item.publishedAt.substring(0,11)
-            val secondPart = item.publishedAt.substring(11,19)
+        if (item.source.name != null){
+            if (item.source.name == "null"){
+                mContext.resources.getString(R.string.author_not_found)
+            }else{
+                holder.binding.nameTv.text = item.source.name
+            }
+            if (item.publishedAt != null && item.url != null && item.urlToImage != null){
+                if (item.publishedAt == "null"){
+                    holder.binding.dateTv.text = mContext.resources.getString(R.string.author_not_found)
+                }else{
+                    val secondPart = item.publishedAt.substring(11,19)
 
-            val time = Time.valueOf(secondPart)
+                    val time = Time.valueOf(secondPart)
 
-            holder.binding.dateTv.text = getTimeFormat(time.time)
-
-
-            Picasso.with(mContext)
-                .load(item.urlToImage)
-                .into(holder.binding.imageView)
-
-            holder.binding.nameTv.text = item.source.name
-
+                    holder.binding.dateTv.text = getTimeFormat(time.time)
+                }
+                if(item.urlToImage.isNotEmpty() && item.urlToImage != "null"){
+                    Picasso.with(mContext)
+                        .load(item.urlToImage)
+                        .into(holder.binding.imageView)
+                }
+            }
         }
     }
 
