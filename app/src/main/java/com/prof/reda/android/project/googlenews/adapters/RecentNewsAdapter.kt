@@ -1,6 +1,7 @@
 package com.prof.reda.android.project.googlenews.adapters
 
 import android.content.Context
+import android.text.format.DateFormat.getTimeFormat
 import android.text.format.DateUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,41 +15,51 @@ import com.prof.reda.android.project.googlenews.databinding.NewsItemsBinding
 import com.prof.reda.android.project.googlenews.models.Article
 import com.squareup.picasso.Picasso
 import java.sql.Time
-class RecentNewsAdapter(private val mContext: Context, private val articleList: List<Article> = arrayListOf()) :
+import java.text.SimpleDateFormat
+import java.time.Duration
+import java.time.ZonedDateTime
+import java.time.chrono.MinguoChronology
+import java.util.concurrent.TimeUnit
+
+class RecentNewsAdapter(
+    private val mContext: Context,
+    private val articleList: List<Article> = arrayListOf()
+) :
     RecyclerView.Adapter<NewsViewHolder>() {
     class NewsViewHolder(val binding: NewsItemsBinding) : ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         Log.d(TAG, "work on adapter")
-        return NewsViewHolder(NewsItemsBinding.inflate(LayoutInflater.from(parent.context), parent,
-            false))
+        return NewsViewHolder(
+            NewsItemsBinding.inflate(
+                LayoutInflater.from(parent.context), parent,
+                false
+            )
+        )
     }
+
     override fun getItemCount(): Int {
         return articleList.size
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
 
-        Log.d(TAG, "onBindViewHolder")
-        val item = articleList[position]
 
-        if (item.source.name != null){
-            if (item.source.name == "null"){
+
+        holder.binding.shareBtn.tag = position
+        holder.binding.bookmarkBtn.tag = position
+
+        if (articleList.size > 0 && articleList != null) {
+            val item = articleList[position]
+
+            if (item.author == "null") {
                 mContext.resources.getString(R.string.author_not_found)
-            }else{
-                holder.binding.nameTv.text = item.source.name
+            } else {
+                holder.binding.authorTv.text = item.author
             }
-            if (item.publishedAt != null && item.url != null && item.urlToImage != null){
-                if (item.publishedAt == "null"){
-                    holder.binding.dateTv.text = mContext.resources.getString(R.string.author_not_found)
-                }else{
-                    val secondPart = item.publishedAt.substring(11,19)
 
-                    val time = Time.valueOf(secondPart)
-
-                    holder.binding.dateTv.text = getTimeFormat(time.time)
-                }
-                if(item.urlToImage.isNotEmpty() && item.urlToImage != "null"){
+            if (item.url != null && item.urlToImage != null) {
+                if (item.urlToImage.isNotEmpty() && item.urlToImage != "null") {
                     Picasso.with(mContext)
                         .load(item.urlToImage)
                         .into(holder.binding.imageView)
@@ -57,27 +68,51 @@ class RecentNewsAdapter(private val mContext: Context, private val articleList: 
         }
     }
 
-    private fun getTimeFormat(time:Long):String{
-        val AVERAGE_MONTH_IN_MILLIS = DateUtils.DAY_IN_MILLIS * 30
+    //    private fun getTimeFormat(time:Long):String{
+//        val AVERAGE_MONTH_IN_MILLIS = DateUtils.DAY_IN_MILLIS * 30
+//        val timeNow = System.currentTimeMillis()
+//        val delta = timeNow - time
+//        val resolution:Long
+//        if (delta <= DateUtils.MINUTE_IN_MILLIS){
+//            resolution = DateUtils.SECOND_IN_MILLIS
+//        }else if (delta <= DateUtils.HOUR_IN_MILLIS){
+//            resolution = DateUtils.MINUTE_IN_MILLIS
+//        }else if (delta <= DateUtils.DAY_IN_MILLIS){
+//            resolution = DateUtils.HOUR_IN_MILLIS
+//        }else if (delta <= DateUtils.WEEK_IN_MILLIS){
+//            resolution = DateUtils.DAY_IN_MILLIS
+//        }else if (delta <= AVERAGE_MONTH_IN_MILLIS){
+//            return (delta / DateUtils.WEEK_IN_MILLIS).toString() + " weeks(s) ago"
+//        }else if (delta <= DateUtils.YEAR_IN_MILLIS){
+//            return (delta / AVERAGE_MONTH_IN_MILLIS).toString() + " month(s) ago"
+//        }else{
+//            return (delta / DateUtils.YEAR_IN_MILLIS).toString() + " year(s) ago"
+//        }
+//
+//        return DateUtils.getRelativeTimeSpanString(time, timeNow, resolution).toString()
+//    }
+    private fun getTimeFormat(time: Long): String {
         val timeNow = System.currentTimeMillis()
-        val delta = timeNow - time
-        val resolution:Long
-        if (delta <= DateUtils.MINUTE_IN_MILLIS){
-            resolution = DateUtils.SECOND_IN_MILLIS
-        }else if (delta <= DateUtils.HOUR_IN_MILLIS){
-            resolution = DateUtils.MINUTE_IN_MILLIS
-        }else if (delta <= DateUtils.DAY_IN_MILLIS){
-            resolution = DateUtils.HOUR_IN_MILLIS
-        }else if (delta <= DateUtils.WEEK_IN_MILLIS){
-            resolution = DateUtils.DAY_IN_MILLIS
-        }else if (delta <= AVERAGE_MONTH_IN_MILLIS){
-            return (delta / DateUtils.WEEK_IN_MILLIS).toString() + " weeks(s) ago"
-        }else if (delta <= DateUtils.YEAR_IN_MILLIS){
-            return (delta / AVERAGE_MONTH_IN_MILLIS).toString() + " month(s) ago"
-        }else{
-            return (delta / DateUtils.YEAR_IN_MILLIS).toString() + " year(s) ago"
-        }
 
-        return DateUtils.getRelativeTimeSpanString(time, timeNow, resolution).toString()
+        val SECOND_MILLIS = 1000
+        val MINUTE_MILLIS: Int = 60 * SECOND_MILLIS
+        val HOUR_MILLIS: Int = 60 * MINUTE_MILLIS
+        val DAY_MILLIS: Int = 24 * HOUR_MILLIS
+        val diff = timeNow - time
+
+        return if (diff < DateUtils.SECOND_IN_MILLIS) {
+            "just now"
+        } else if (diff < 2 * DateUtils.MINUTE_IN_MILLIS) {
+            "a minute ago"
+        } else if (diff < 50 * DateUtils.MINUTE_IN_MILLIS) {
+            (diff / MINUTE_MILLIS).toString() + " minutes ago"
+        } else if (diff < 90 * DateUtils.MINUTE_IN_MILLIS) {
+            "an hour ago"
+        } else if (diff < 24 * DateUtils.HOUR_IN_MILLIS) {
+            (diff / HOUR_MILLIS).toString() + " hours ago"
+        } else if (diff < 48 * DateUtils.HOUR_IN_MILLIS) {
+            "yesterday"
+        } else (diff / DateUtils.DAY_IN_MILLIS).toString() + " days ago"
+
     }
 }

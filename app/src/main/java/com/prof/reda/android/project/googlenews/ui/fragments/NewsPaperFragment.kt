@@ -11,10 +11,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.prof.reda.android.project.googlenews.BuildConfig
 import com.prof.reda.android.project.googlenews.R
 import com.prof.reda.android.project.googlenews.TAG
 import com.prof.reda.android.project.googlenews.adapters.RecentNewsAdapter
+import com.prof.reda.android.project.googlenews.adapters.ViewPagerAdapter
 import com.prof.reda.android.project.googlenews.application
 import com.prof.reda.android.project.googlenews.databinding.FragmentNewsPaperBinding
 import com.prof.reda.android.project.googlenews.models.Article
@@ -44,6 +48,8 @@ class NewsPaperFragment : Fragment() {
             prepareRecentRecyclerView(articles)
         })
 
+        setupViewpager()
+
         return binding.root
     }
 
@@ -57,5 +63,32 @@ class NewsPaperFragment : Fragment() {
         val recentNewsAdapter = context?.let { RecentNewsAdapter(it, articleList) }
         binding.morningNewsRv.adapter = recentNewsAdapter
 
+    }
+
+    private fun setupViewpager(){
+        binding.tabLayout.apply {
+            addTab(binding.tabLayout.newTab().setText("Techno"))
+            addTab(binding.tabLayout.newTab().setText("Business"))
+            addTab(binding.tabLayout.newTab().setText("Tech"))
+        }
+
+        val viewPagerAdapter = ViewPagerAdapter(requireActivity())
+        binding.viewpager.adapter = viewPagerAdapter
+
+        binding.tabLayout.addOnTabSelectedListener(object: OnTabSelectedListener{
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                binding.viewpager.currentItem = tab!!.position
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
+
+        binding.viewpager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(position))
+            }
+        })
     }
 }

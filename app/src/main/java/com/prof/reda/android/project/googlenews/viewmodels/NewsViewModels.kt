@@ -18,18 +18,16 @@ class NewsViewModels(application: Application) : ViewModel() {
     }
     fun getRecentArticles(apiKey: String): MutableLiveData<List<Article>>{
 
-//        viewModelScope.launch {
-//             recentArticles = repository.getRecentArticles(apiKey)
-//        }
-
-        Log.d("Google News", "get recent articles")
-        return repository.getRecentArticles(apiKey)
+        viewModelScope.launch {
+             recentArticles = repository.getRecentArticles(apiKey)
+        }
+        return recentArticles
     }
 
     fun getTechnologyArticles(apiKey: String): MutableLiveData<List<Article>>{
-//        viewModelScope.launch {
-//            technologyArticles = repository.getTechnologyArticles(apiKey)
-//        }
-        return repository.getTechnologyArticles(apiKey)
+        viewModelScope.launch {
+            technologyArticles = repository.getTechnologyArticles(apiKey)
+        }
+        return recentArticles
     }
 }
