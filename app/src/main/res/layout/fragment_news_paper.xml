@@ -137,7 +137,7 @@
                     app:layout_constraintStart_toStartOf="@id/guideline"
                     app:layout_constraintEnd_toEndOf="@id/guideline2"
                     app:layout_constraintTop_toBottomOf="@id/morningNews_tv"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="5dp"
                     />
 
                 <com.google.android.material.tabs.TabLayout
@@ -147,7 +147,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/guideline2"
                     app:layout_constraintStart_toStartOf="@+id/guideline"
                     app:layout_constraintTop_toBottomOf="@id/morningNews_rv"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="5dp"
                     app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget" />
 
                 <androidx.viewpager2.widget.ViewPager2
@@ -164,14 +164,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.05109489" />
+                    app:layout_constraintGuide_percent="0.03109489" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.95109489" />
+                    app:layout_constraintGuide_percent="0.97109489" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>

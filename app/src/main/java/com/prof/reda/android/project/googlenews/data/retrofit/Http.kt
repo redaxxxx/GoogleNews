@@ -1,4 +1,4 @@
-package com.prof.reda.android.project.googlenews.retrofit
+package com.prof.reda.android.project.googlenews.data.retrofit
 
 import android.util.Log
 import com.prof.reda.android.project.googlenews.APPLICATION_JSON

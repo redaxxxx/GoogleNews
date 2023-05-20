@@ -21,15 +21,16 @@ import com.prof.reda.android.project.googlenews.adapters.RecentNewsAdapter
 import com.prof.reda.android.project.googlenews.adapters.ViewPagerAdapter
 import com.prof.reda.android.project.googlenews.application
 import com.prof.reda.android.project.googlenews.databinding.FragmentNewsPaperBinding
-import com.prof.reda.android.project.googlenews.models.Article
+import com.prof.reda.android.project.googlenews.data.models.Article
 import com.prof.reda.android.project.googlenews.viewmodels.NewsViewModelFactory
 import com.prof.reda.android.project.googlenews.viewmodels.NewsViewModels
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class NewsPaperFragment : Fragment() {
     private lateinit var binding: FragmentNewsPaperBinding
     private lateinit var viewModels: NewsViewModels
-    private var articles:List<Article> = arrayListOf()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,15 +41,18 @@ class NewsPaperFragment : Fragment() {
         viewModels = ViewModelProvider(this, factory).get(NewsViewModels::class.java)
 
         binding.lifecycleOwner = this
-//        viewModels.getRecentArticles(BuildConfig.NEWS_API_KEY).observe(viewLifecycleOwner){
-//            Log.d(TAG, "observe change in data")
-//            prepareRecyclerView(it)
-//        }
-        viewModels.getRecentArticles(BuildConfig.NEWS_API_KEY).observe(viewLifecycleOwner, Observer {articles->
+        setupViewpager()
+
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.MONTH, -1)
+        val date:Date = calendar.getTime();
+        val format = SimpleDateFormat("yyyy MM dd");
+        val dateOutput = format.format(date);
+
+
+        viewModels.getRecentArticles("bitcoin",dateOutput, "publishedAt", BuildConfig.NEWS_API_KEY).observe(viewLifecycleOwner, Observer {articles->
             prepareRecentRecyclerView(articles)
         })
-
-        setupViewpager()
 
         return binding.root
     }

@@ -11,27 +11,21 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.prof.reda.android.project.googlenews.R
 import com.prof.reda.android.project.googlenews.TAG
 import com.prof.reda.android.project.googlenews.adapters.RecentNewsAdapter.NewsViewHolder
-import com.prof.reda.android.project.googlenews.databinding.NewsItemsBinding
-import com.prof.reda.android.project.googlenews.models.Article
+import com.prof.reda.android.project.googlenews.databinding.RecentNewsItemsBinding
+import com.prof.reda.android.project.googlenews.data.models.Article
 import com.squareup.picasso.Picasso
-import java.sql.Time
-import java.text.SimpleDateFormat
-import java.time.Duration
-import java.time.ZonedDateTime
-import java.time.chrono.MinguoChronology
-import java.util.concurrent.TimeUnit
 
 class RecentNewsAdapter(
     private val mContext: Context,
-    private val articleList: List<Article> = arrayListOf()
+    private val articleList: List<Article>
 ) :
     RecyclerView.Adapter<NewsViewHolder>() {
-    class NewsViewHolder(val binding: NewsItemsBinding) : ViewHolder(binding.root)
+    class NewsViewHolder(val binding: RecentNewsItemsBinding) : ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         Log.d(TAG, "work on adapter")
         return NewsViewHolder(
-            NewsItemsBinding.inflate(
+            RecentNewsItemsBinding.inflate(
                 LayoutInflater.from(parent.context), parent,
                 false
             )
@@ -44,75 +38,49 @@ class RecentNewsAdapter(
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
 
-
-
         holder.binding.shareBtn.tag = position
         holder.binding.bookmarkBtn.tag = position
 
         if (articleList.size > 0 && articleList != null) {
             val item = articleList[position]
 
+            Log.i(TAG, "author " + item.author + "urlToImage " + item.urlToImage)
             if (item.author == "null") {
-                mContext.resources.getString(R.string.author_not_found)
+                holder.binding.nameTv.text = mContext.resources.getString(R.string.author_not_found)
             } else {
-                holder.binding.authorTv.text = item.author
+                holder.binding.nameTv.text = item.author
             }
 
-            if (item.url != null && item.urlToImage != null) {
-                if (item.urlToImage.isNotEmpty() && item.urlToImage != "null") {
-                    Picasso.with(mContext)
-                        .load(item.urlToImage)
-                        .into(holder.binding.imageView)
-                }
+            if (item.urlToImage!= null && item.urlToImage != "null") {
+                Picasso.with(mContext)
+                    .load(item.urlToImage)
+                    .into(holder.binding.imageView)
             }
         }
     }
 
-    //    private fun getTimeFormat(time:Long):String{
-//        val AVERAGE_MONTH_IN_MILLIS = DateUtils.DAY_IN_MILLIS * 30
+//    private fun getTimeFormat(time: Long): String {
 //        val timeNow = System.currentTimeMillis()
-//        val delta = timeNow - time
-//        val resolution:Long
-//        if (delta <= DateUtils.MINUTE_IN_MILLIS){
-//            resolution = DateUtils.SECOND_IN_MILLIS
-//        }else if (delta <= DateUtils.HOUR_IN_MILLIS){
-//            resolution = DateUtils.MINUTE_IN_MILLIS
-//        }else if (delta <= DateUtils.DAY_IN_MILLIS){
-//            resolution = DateUtils.HOUR_IN_MILLIS
-//        }else if (delta <= DateUtils.WEEK_IN_MILLIS){
-//            resolution = DateUtils.DAY_IN_MILLIS
-//        }else if (delta <= AVERAGE_MONTH_IN_MILLIS){
-//            return (delta / DateUtils.WEEK_IN_MILLIS).toString() + " weeks(s) ago"
-//        }else if (delta <= DateUtils.YEAR_IN_MILLIS){
-//            return (delta / AVERAGE_MONTH_IN_MILLIS).toString() + " month(s) ago"
-//        }else{
-//            return (delta / DateUtils.YEAR_IN_MILLIS).toString() + " year(s) ago"
-//        }
 //
-//        return DateUtils.getRelativeTimeSpanString(time, timeNow, resolution).toString()
+//        val SECOND_MILLIS = 1000
+//        val MINUTE_MILLIS: Int = 60 * SECOND_MILLIS
+//        val HOUR_MILLIS: Int = 60 * MINUTE_MILLIS
+//        val DAY_MILLIS: Int = 24 * HOUR_MILLIS
+//        val diff = timeNow - time
+//
+//        return if (diff < DateUtils.SECOND_IN_MILLIS) {
+//            "just now"
+//        } else if (diff < 2 * DateUtils.MINUTE_IN_MILLIS) {
+//            "a minute ago"
+//        } else if (diff < 50 * DateUtils.MINUTE_IN_MILLIS) {
+//            (diff / MINUTE_MILLIS).toString() + " minutes ago"
+//        } else if (diff < 90 * DateUtils.MINUTE_IN_MILLIS) {
+//            "an hour ago"
+//        } else if (diff < 24 * DateUtils.HOUR_IN_MILLIS) {
+//            (diff / HOUR_MILLIS).toString() + " hours ago"
+//        } else if (diff < 48 * DateUtils.HOUR_IN_MILLIS) {
+//            "yesterday"
+//        } else (diff / DateUtils.DAY_IN_MILLIS).toString() + " days ago"
+//
 //    }
-    private fun getTimeFormat(time: Long): String {
-        val timeNow = System.currentTimeMillis()
-
-        val SECOND_MILLIS = 1000
-        val MINUTE_MILLIS: Int = 60 * SECOND_MILLIS
-        val HOUR_MILLIS: Int = 60 * MINUTE_MILLIS
-        val DAY_MILLIS: Int = 24 * HOUR_MILLIS
-        val diff = timeNow - time
-
-        return if (diff < DateUtils.SECOND_IN_MILLIS) {
-            "just now"
-        } else if (diff < 2 * DateUtils.MINUTE_IN_MILLIS) {
-            "a minute ago"
-        } else if (diff < 50 * DateUtils.MINUTE_IN_MILLIS) {
-            (diff / MINUTE_MILLIS).toString() + " minutes ago"
-        } else if (diff < 90 * DateUtils.MINUTE_IN_MILLIS) {
-            "an hour ago"
-        } else if (diff < 24 * DateUtils.HOUR_IN_MILLIS) {
-            (diff / HOUR_MILLIS).toString() + " hours ago"
-        } else if (diff < 48 * DateUtils.HOUR_IN_MILLIS) {
-            "yesterday"
-        } else (diff / DateUtils.DAY_IN_MILLIS).toString() + " days ago"
-
-    }
 }

@@ -1,60 +1,68 @@
 package com.prof.reda.android.project.googlenews.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.prof.reda.android.project.googlenews.R
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import com.prof.reda.android.project.googlenews.*
+import com.prof.reda.android.project.googlenews.adapters.NewsAdapter
+import com.prof.reda.android.project.googlenews.databinding.FragmentBusinessBinding
+import com.prof.reda.android.project.googlenews.data.models.Article
+import com.prof.reda.android.project.googlenews.ui.activities.NewsDetails
+import com.prof.reda.android.project.googlenews.viewmodels.NewsViewModelFactory
+import com.prof.reda.android.project.googlenews.viewmodels.NewsViewModels
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [BusinessFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class BusinessFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+class BusinessFragment : Fragment(), NewsAdapter.OnClickListenerItem, NewsAdapter.OnShareNewUrl{
+    private lateinit var binding: FragmentBusinessBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_business, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_business, container, false)
+        val factory = NewsViewModelFactory(application)
+        val viewModel = ViewModelProvider(this, factory).get(NewsViewModels::class.java)
+        binding.lifecycleOwner = this
+
+        viewModel.getBusinessArticles(BuildConfig.NEWS_API_KEY)
+            .observe(viewLifecycleOwner) { articles ->
+                prepareRecyclerView(articles)
+            }
+
+        return binding.root
+    }
+    private fun prepareRecyclerView(articleList: List<Article>){
+        val adapter = context?.let { NewsAdapter(it, articleList,this,this) }
+        binding.businessRv.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        binding.businessRv.setHasFixedSize(true)
+        binding.businessRv.itemAnimator = DefaultItemAnimator()
+        binding.businessRv.adapter = adapter
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BusinessFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BusinessFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onClick(article: Article) {
+        val intent = Intent(activity, NewsDetails::class.java)
+
+        intent.putExtra(URL_IMAGE, article.urlToImage)
+        intent.putExtra(PUBLISHED_AT, article.publishedAt)
+        intent.putExtra(TITLE, article.title)
+        intent.putExtra(NEWS_NAME, article.source.name)
+        intent.putExtra(DESCRIPTION, article.description)
+        Log.d(TAG, "url to image is ${article.urlToImage}")
+        startActivity(intent)
+    }
+    override fun onShare(article: Article) {
+        val sendIntent = Intent(Intent.ACTION_SEND)
+        sendIntent.setType("text/plain")
+        sendIntent.putExtra(Intent.EXTRA_TEXT,article.url)
+        startActivity(Intent.createChooser(sendIntent, "Share with"))
     }
 }
