@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -8,62 +7,88 @@
     </data>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:elevation="5dp"
-        app:cardCornerRadius="15dp"
-        app:cardUseCompatPadding="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:cardUseCompatPadding="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="match_parent"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewOfImage"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/newsImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"/>
+            </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/author_tv"
+                android:id="@+id/publishedAt_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="15dp"
-                android:text="author"
-                android:textColor="@color/white"
-                android:textSize="11sp"
+                android:textColor="@color/light_gray"
+                android:text="date"
+                android:textSize="10sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="3dp"
+                android:text="TextView"
+                android:textSize="10sp"
+                android:lines="2"
+                android:textColor="@android:color/darker_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cardViewOfImage"
+                app:layout_constraintTop_toBottomOf="@id/publishedAt_tv" />
+
+            <TextView
+                android:id="@+id/nameTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="3dp"
+                android:text="TextView"
+                android:textSize="10sp"
+                android:textColor="@color/light_gray"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@id/title_tv" />
+                app:layout_constraintEnd_toStartOf="@+id/imageView2"
+                app:layout_constraintStart_toEndOf="@+id/boardImageview" />
+
+            <ImageView
+                android:id="@+id/boardImageview"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/baseline_border_color_24"
+                app:layout_constraintStart_toEndOf="@id/cardViewOfImage"
+                app:layout_constraintBottom_toBottomOf="@id/nameTextView"
+                android:layout_marginStart="5dp"/>
 
             <ImageView
                 android:id="@+id/shareBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/baseline_share_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="8dp"/>
-
-            <ImageView
-                android:id="@+id/bookmarkBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:layout_marginEnd="5dp"
-                android:src="@drawable/baseline_bookmark_24"
-                app:layout_constraintEnd_toStartOf="@id/shareBtn"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="8dp"/>
+                android:src="@drawable/baseline_share_24"
+                app:layout_constraintBottom_toBottomOf="@+id/nameTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/nameTextView" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
 
+    </androidx.cardview.widget.CardView>
 </layout>

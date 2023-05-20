@@ -16,27 +16,34 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        var fragment:Fragment
         binding.bottomNavBar.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.newsHome ->{
-                    loadFragment(NewsPaperFragment())
+                    fragment = NewsPaperFragment()
+                    loadFragment(fragment)
                     true
                 }
 
                 R.id.favorite ->{
-                    loadFragment(FavoriteFragment())
+                    fragment = FavoriteFragment()
+                    loadFragment(fragment)
                     true
                 }
 
                 R.id.profile ->{
-                    loadFragment(ProfileFragment())
+                    fragment = ProfileFragment()
+                    loadFragment(fragment)
                     true
                 }
 
-                else ->{
-                    loadFragment(SearchFragment())
+                R.id.search ->{
+                    fragment = SearchFragment()
+                    loadFragment(fragment)
                     true
                 }
+                else -> {false}
             }
 
         }
@@ -44,8 +51,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadFragment(fragment: Fragment){
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.container, fragment).commit()
-        }
+        supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
+
     }
 }
