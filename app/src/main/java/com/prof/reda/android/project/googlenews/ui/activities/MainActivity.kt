@@ -1,15 +1,12 @@
 package com.prof.reda.android.project.googlenews.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import com.prof.reda.android.project.googlenews.R
 import com.prof.reda.android.project.googlenews.databinding.ActivityMainBinding
-import com.prof.reda.android.project.googlenews.ui.fragments.FavoriteFragment
-import com.prof.reda.android.project.googlenews.ui.fragments.NewsPaperFragment
-import com.prof.reda.android.project.googlenews.ui.fragments.ProfileFragment
-import com.prof.reda.android.project.googlenews.ui.fragments.SearchFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,41 +14,28 @@ class MainActivity : AppCompatActivity() {
 
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        var fragment:Fragment
-        binding.bottomNavBar.setOnItemSelectedListener {
-            when(it.itemId){
-                R.id.newsHome ->{
-                    fragment = NewsPaperFragment()
-                    loadFragment(fragment)
-                    true
-                }
+        Handler().postDelayed(Runnable {
+            kotlin.run { isFirstTime() }
+        }, 1500)
+    }
 
-                R.id.favorite ->{
-                    fragment = FavoriteFragment()
-                    loadFragment(fragment)
-                    true
-                }
+    private fun isFirstTime() {
+        //for checking if the app is running for the very first time
+        //we need to saved a value to shared preferences
+        val preferences = getSharedPreferences("onBoard", MODE_PRIVATE)
+        val isFirstTime = preferences.getBoolean("isFirstTime", true)
 
-                R.id.profile ->{
-                    fragment = ProfileFragment()
-                    loadFragment(fragment)
-                    true
-                }
-
-                R.id.search ->{
-                    fragment = SearchFragment()
-                    loadFragment(fragment)
-                    true
-                }
-                else -> {false}
-            }
-
+        //default value
+        if (isFirstTime) {
+            //if its true then its first time and we will change it false
+            val editor = preferences.edit()
+            editor.putBoolean("isFirstTime", false)
+            editor.apply()
+            startActivity(Intent(this, OnboardingActivity::class.java))
+        } else {
+            //Start Home
+            startActivity(Intent(this, HomeActivity::class.java))
         }
-
     }
 
-    private fun loadFragment(fragment: Fragment){
-        supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
-
-    }
 }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "493815300415",
+    "project_id": "news-b113d",
+    "storage_bucket": "news-b113d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493815300415:android:65e3456a839857389a138a",
+        "android_client_info": {
+          "package_name": "com.prof.reda.android.project.googlenews"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "493815300415-vcsct9oc59v6240c3fv7ts79ghijlg6u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyHDJwxKoW8ARLIrirIso1VSqKOMt4UMI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "493815300415-vcsct9oc59v6240c3fv7ts79ghijlg6u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
