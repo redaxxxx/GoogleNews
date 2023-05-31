@@ -12,22 +12,31 @@
         android:layout_height="match_parent"
         tools:context=".ui.activities.NewsDetails">
 
-
-        <ImageView
-            android:id="@+id/newsImgView"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewOfImage"
             android:layout_width="0dp"
-            android:layout_height="180dp"
-            android:scaleType="centerCrop"
+            android:layout_height="200dp"
+            app:cardElevation="8dp"
+            app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/newsImgView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+
+        </androidx.cardview.widget.CardView>
+
 
         <TextView
             android:id="@+id/publishedAt_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/newsImgView"
-            app:layout_constraintEnd_toEndOf="@id/newsImgView"
+            app:layout_constraintTop_toBottomOf="@id/cardViewOfImage"
+            app:layout_constraintEnd_toEndOf="@id/cardViewOfImage"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:text="date"
@@ -97,8 +106,8 @@
             android:id="@+id/description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

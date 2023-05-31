@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "493815300415",
+    "firebase_url": "https://news-b113d-default-rtdb.firebaseio.com",
     "project_id": "news-b113d",
     "storage_bucket": "news-b113d.appspot.com"
   },

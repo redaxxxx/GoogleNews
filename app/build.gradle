@@ -53,7 +53,14 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
     implementation 'androidx.test.ext:junit-ktx:1.1.5'
+
+    //Firebase
+    implementation 'com.google.firebase:firebase-database:20.2.1'
+    implementation 'com.google.firebase:firebase-auth:22.0.0'
+    implementation 'com.google.firebase:firebase-storage:20.0.1'
     implementation 'com.google.firebase:firebase-auth-ktx:22.0.0'
+    implementation 'com.google.firebase:firebase-database-ktx:20.2.2'
+    implementation 'com.google.firebase:firebase-storage-ktx:20.2.0'
 
     //testing
     testImplementation 'junit:junit:4.13.2'
@@ -93,4 +100,10 @@ dependencies {
     implementation("androidx.room:room-ktx:2.5.1")
     implementation "androidx.room:room-runtime:2.5.1"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    //Glide
+    implementation "com.github.bumptech.glide:glide:4.11.0"
+
+    //cycle image
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }

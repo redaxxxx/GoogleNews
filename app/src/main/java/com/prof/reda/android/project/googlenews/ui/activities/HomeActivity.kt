@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.prof.reda.android.project.googlenews.R
 import com.prof.reda.android.project.googlenews.databinding.ActivityHomeBinding
-import com.prof.reda.android.project.googlenews.ui.fragments.FavoriteFragment
+import com.prof.reda.android.project.googlenews.ui.fragments.BookmarkFragment
 import com.prof.reda.android.project.googlenews.ui.fragments.NewsPaperFragment
 import com.prof.reda.android.project.googlenews.ui.fragments.ProfileFragment
 import com.prof.reda.android.project.googlenews.ui.fragments.SearchFragment
@@ -28,24 +28,17 @@ class HomeActivity : AppCompatActivity() {
                     true
                 }
 
-                R.id.favorite ->{
-                    fragment = FavoriteFragment()
+                R.id.bookmark ->{
+                    fragment = BookmarkFragment()
                     loadFragment(fragment)
                     true
                 }
 
-                R.id.profile ->{
+                else ->{
                     fragment = ProfileFragment()
                     loadFragment(fragment)
                     true
                 }
-
-                R.id.search ->{
-                    fragment = SearchFragment()
-                    loadFragment(fragment)
-                    true
-                }
-                else -> {false}
             }
 
         }

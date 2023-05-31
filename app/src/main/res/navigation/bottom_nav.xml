@@ -10,11 +10,7 @@
         android:name="com.prof.reda.android.project.googlenews.ui.fragments.NewsPaperFragment"
         android:label="fragment_news_paper"
         tools:layout="@layout/fragment_news_paper" />
-    <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.prof.reda.android.project.googlenews.ui.fragments.SearchFragment"
-        android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.prof.reda.android.project.googlenews.ui.fragments.ProfileFragment"
@@ -22,7 +18,7 @@
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.prof.reda.android.project.googlenews.ui.fragments.FavoriteFragment"
+        android:name="com.prof.reda.android.project.googlenews.ui.fragments.BookmarkFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" />
 </navigation>

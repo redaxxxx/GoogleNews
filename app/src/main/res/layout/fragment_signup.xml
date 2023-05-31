@@ -27,20 +27,19 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/firstName_outline"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="First Name"
-            app:hintAnimationEnabled="true"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            app:shapeAppearance="@style/Cut"
-            app:boxStrokeColor="@color/purple_500"
-            app:endIconMode="clear_text"
-            android:gravity="center"
             android:background="@android:color/transparent"
+            android:gravity="center"
+            android:hint="First Name"
+            app:endIconMode="clear_text"
+            app:hintAnimationEnabled="true"
             app:layout_constraintEnd_toStartOf="@+id/guideline6"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toBottomOf="@id/signUp_textView">
+            app:layout_constraintTop_toBottomOf="@id/signUp_textView"
+            app:shapeAppearance="@style/Cut">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/firstName_et"
@@ -53,15 +52,15 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/lastName_outline"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:hintAnimationEnabled="true"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            app:shapeAppearance="@style/Cut"
             app:layout_constraintEnd_toStartOf="@+id/guideline6"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toBottomOf="@id/firstName_outline">
+            app:layout_constraintTop_toBottomOf="@id/firstName_outline"
+            app:shapeAppearance="@style/Cut">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/lastName_et"
@@ -75,15 +74,15 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/email_outline"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:hintAnimationEnabled="true"
-            app:shapeAppearance="@style/Cut"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             app:layout_constraintEnd_toStartOf="@+id/guideline6"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toBottomOf="@id/lastName_outline">
+            app:layout_constraintTop_toBottomOf="@id/lastName_outline"
+            app:shapeAppearance="@style/Cut">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email_et"
@@ -97,15 +96,15 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/password_outline"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:shapeAppearance="@style/Cut"
             app:hintAnimationEnabled="true"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             app:layout_constraintEnd_toStartOf="@+id/guideline6"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toBottomOf="@id/email_outline">
+            app:layout_constraintTop_toBottomOf="@id/email_outline"
+            app:shapeAppearance="@style/Cut">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_et"
@@ -113,53 +112,53 @@
                 android:layout_height="wrap_content"
                 android:hint="Password"
                 android:imeOptions="actionNext"
-                app:passwordToggleEnabled="true"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                app:passwordToggleEnabled="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/signupBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="35dp"
             android:background="@drawable/onboarding_btn_background"
             android:text="SignUp"
-            android:fontFamily="cursive"
-            android:textSize="16sp"
             android:textColor="@color/white"
+            android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toStartOf="@+id/guideline6"
-            app:layout_constraintStart_toStartOf="@+id/guideline5" />
+            app:layout_constraintStart_toStartOf="@+id/guideline5"
+            app:layout_constraintTop_toBottomOf="@+id/password_outline" />
 
         <TextView
             android:id="@+id/alreadyTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@+id/signupBtn"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
             android:text="I have already account,"
             android:textSize="14sp"
-            android:fontFamily="cursive"
-            android:gravity="start"
-            android:layout_marginBottom="5dp" />
+            app:layout_constraintEnd_toStartOf="@id/goToLogInBtn"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/guideline5"
+            app:layout_constraintTop_toBottomOf="@+id/signupBtn" />
 
         <TextView
             android:id="@+id/goToLogInBtn"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@id/guideline6"
-            app:layout_constraintStart_toEndOf="@id/alreadyTextView"
-            app:layout_constraintBottom_toBottomOf="@id/alreadyTextView"
-            app:layout_constraintTop_toTopOf="@id/alreadyTextView"
             android:layout_marginStart="3dp"
+            android:gravity="end"
             android:text="Login"
-            android:textSize="16sp"
+            android:textColor="@color/purple_700"
+            android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="@color/purple_500"
-            android:fontFamily="cursive"
-            android:gravity="start" />
+            app:layout_constraintBottom_toBottomOf="@id/alreadyTextView"
+            app:layout_constraintEnd_toEndOf="@id/guideline6"
+            app:layout_constraintStart_toEndOf="@id/alreadyTextView"
+            app:layout_constraintTop_toTopOf="@id/alreadyTextView" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline4"
